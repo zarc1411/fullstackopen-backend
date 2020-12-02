@@ -5,6 +5,7 @@ const app = express();
 const cors = require("cors");
 app.use(express.json());
 app.use(cors());
+app.use(express.static("build"));
 morgan.token("body", (request, response) => {
     if (request.method === "POST") return JSON.stringify(request.body);
 });
@@ -62,7 +63,7 @@ app.delete("/api/persons/:id", (request, response) => {
 });
 
 const generateRandomId = () => {
-    return Math.floor(Math.random() * 10000);
+    return Math.floor(Math.random() * 1000000);
 };
 
 const nameAlreadyExists = (personName) => {
@@ -83,10 +84,8 @@ app.post("/api/persons/", (request, response) => {
         name: person.name,
         number: person.number,
     };
-
     persons = persons.concat(newPerson);
-
-    response.json(persons);
+    response.json(newPerson);
 });
 
 const unknownEndpoint = (request, response) => {
